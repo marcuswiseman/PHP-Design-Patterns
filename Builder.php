@@ -1,6 +1,5 @@
 <?php
 
-
 interface PizzaInterface {
 	public function setToppings($toppings);
 	public function setBase($base_flavour);
@@ -14,9 +13,8 @@ interface PizzaBuilderInterface {
 	public function getPizza();
 }
 
-
 interface CookInterface {
-	public function cookPizza();
+	public function cookPizza(PizzaBuilder $pizza_builder);
 }
 
 // Product
@@ -76,15 +74,9 @@ class PizzaBuilder implements PizzaBuilderInterface {
 
 // Director
 class Cook implements CookInterface {
-
-	private $pizza_builder;
-
-	public function __construct(PizzaBuilder $pizza_builder) {
-		$this->pizza_builder = $pizza_builder;
-	}
 	
-	function cookPizza () {
-		$pizza = $this->pizza_builder->getPizza();
+	function cookPizza (PizzaBuilder $pizza_builder) {
+		$pizza = $pizza_builder->getPizza();
 		$base = $pizza->getBase();
 		$toppings = implode(' ', $pizza->getToppings());
 		echo "Chef is cooking up a {$base} {$toppings} pizza";
@@ -98,5 +90,5 @@ $pizza->addBase(Pizza::BASE_BBQ);
 $pizza->addTopping(Pizza::TOPPING_CHEESE);
 $pizza->addTopping(Pizza::TOPPING_HAM);
 
-$cook = new Cook($pizza);
-$cook->cookPizza();
+$cook = new Cook();
+$cook->cookPizza($pizza);
