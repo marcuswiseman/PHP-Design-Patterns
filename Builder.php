@@ -83,7 +83,7 @@ class Cook implements CookInterface {
 		$this->pizza_builder = $pizza_builder;
 	}
 	
-	public function cookPizza () {
+	function cookPizza () {
 		$pizza = $this->pizza_builder->getPizza();
 		$base = $pizza->getBase();
 		$toppings = implode(' ', $pizza->getToppings());
